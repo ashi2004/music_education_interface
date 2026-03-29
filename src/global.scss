@@ -41,6 +41,22 @@ ion-modal.note-modal {
   min-height: 0 !important;
 }
 
+ion-modal.exercise-select-modal {
+  --width: min(94vw, 560px);
+  --max-width: 560px;
+  --height: auto;
+  --max-height: 84vh;
+  --border-radius: 14px;
+  --overflow: hidden;
+  --background: #1c1c1e;
+  --color: #f6f7f9;
+}
+
+body:not(.dark-theme) ion-modal.exercise-select-modal {
+  --background: #1f1f22;
+  --color: #f6f7f9;
+}
+
 ion-modal {
   --ion-backdrop-color: #000000;
   --backdrop-opacity: 0.35;

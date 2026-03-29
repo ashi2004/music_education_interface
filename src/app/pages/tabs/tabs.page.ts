@@ -8,7 +8,7 @@
 
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { IonicModule, IonTabs, MenuController, PickerController } from '@ionic/angular';
+import { IonicModule, IonTabs, MenuController, ModalController, PickerController } from '@ionic/angular';
 import { TabsService } from 'src/app/services/tabs.service';
 import { Router } from "@angular/router";
 import { range } from 'lodash';
@@ -16,6 +16,8 @@ import { MAXREFFREQUENCY, MINREFFREQUENCY } from 'src/app/constants';
 import { PitchService } from 'src/app/services/pitch.service';
 import { RefFreqService } from 'src/app/services/ref-freq.service';
 import { SoundsService } from 'src/app/services/sounds.service';
+import { ExerciseSelectModalComponent } from 'src/app/components/exercise-select-modal/exercise-select-modal.component';
+import { ExerciseSelectionService, ExerciseType, RelativeMode } from 'src/app/services/exercise-selection.service';
 @Component({
   selector: 'app-tabs',
   templateUrl: './tabs.page.html',
@@ -47,10 +49,12 @@ export class TabsComponent implements OnInit {
     private tabsService: TabsService,
     private router: Router,
     private menu: MenuController,
+    private modalController: ModalController,
     private pickerController: PickerController,
     private refFrequencyService: RefFreqService,
     private soundsService: SoundsService,
     private pitchService: PitchService,
+    private exerciseSelectionService: ExerciseSelectionService,
   ) { }
   @ViewChild('tabs', { static: false }) tabs: IonTabs | undefined;
 
@@ -162,7 +166,22 @@ export class TabsComponent implements OnInit {
   }
 
   async prepareExerciseMedia() {
-    await this.soundsService.unlockAudio();
+    const modal = await this.modalController.create({
+      component: ExerciseSelectModalComponent,
+      backdropDismiss: false,
+    });
+
+    await modal.present();
+
+    const { data, role } = await modal.onWillDismiss<{
+      selectedExercise: ExerciseType;
+      selectedMode: RelativeMode | null;
+    }>();
+
+    if (role === 'confirm' && data?.selectedExercise) {
+      this.exerciseSelectionService.setSelection(data.selectedExercise, data.selectedMode ?? null);
+      await this.soundsService.unlockAudio();
+    }
   }
 
   async prepareTunerMedia() {

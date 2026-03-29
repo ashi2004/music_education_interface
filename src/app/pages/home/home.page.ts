@@ -15,7 +15,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faCircleChevronDown, faCircleChevronUp } from '@fortawesome/free-solid-svg-icons';
 import { Howler } from 'howler';
 import { range } from 'lodash';
-import { Observable, interval, tap } from 'rxjs';
+import { Observable, Subscription, interval, tap } from 'rxjs';
 import { ChromaticTunerComponent } from 'src/app/components/chromatic-tuner/chromatic-tuner.component';
 import { NoteSelectorComponent } from 'src/app/components/note-selector/note-selector.component';
 import { ScoreViewComponent } from 'src/app/components/score/score.component';
@@ -29,6 +29,7 @@ import { PitchService } from 'src/app/services/pitch.service';
 import { RefFreqService } from 'src/app/services/ref-freq.service';
 import { SoundsService } from 'src/app/services/sounds.service';
 import { TabsService } from 'src/app/services/tabs.service';
+import { ExerciseSelectionService } from 'src/app/services/exercise-selection.service';
 import { scoreFromNote } from 'src/app/utils/score.utils';
 import { DYNAMICS, INITIAL_NOTE, MAXCYCLES, MAXREFFREQUENCY, MAXTEMPO, MINREFFREQUENCY, MINTEMPO, TRUMPET_NOTES, CLARINET_NOTES, POSITIONS, TRUMPET_BTN, CLARINET_POSITIONS,OBOE_NOTES,OBOE_POSITIONS} from '../../constants';
 import { BeatService } from '../../services/beat.service';
@@ -53,6 +54,7 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
   private resizeObserver: ResizeObserver | null = null;
   private readonly boundScaleContent = () => this.scaleContent();
   private readonly boundRefreshSettings = () => this.handleSettingsUpdated();
+  private exerciseSelectionSubscription?: Subscription;
 
   /**
    * Indicates the mode - tuner or trumpet.
@@ -60,6 +62,8 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
    */
   selectedInstrument = 'trumpet';
   language: string = 'en'; // Default language
+  selectedExercise: 'current' | 'relative' = 'current';
+  selectedMode: 'unison' | 'chord' | null = null;
   /**
    * Array of notes corresponding to the selected instrument.
    */
@@ -213,6 +217,7 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
     private tabsService: TabsService,
     private pitchService: PitchService,
     private router: Router,
+    private exerciseSelectionService: ExerciseSelectionService,
   ) {
     this.NOTES = this.getNotesForInstrument(this.selectedInstrument);
   
@@ -253,6 +258,10 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
    */
   ngOnInit(): void {
     console.log(localStorage.getItem('LoggedInUser '));
+    this.exerciseSelectionSubscription = this.exerciseSelectionService.selection$.subscribe(selection => {
+      this.selectedExercise = selection.selectedExercise;
+      this.selectedMode = selection.selectedMode;
+    });
     this.refFrequencyService.getRefFrequency().subscribe(value => {
       this.refFrequencyValue$ = value;
     });
@@ -262,6 +271,7 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
+    this.exerciseSelectionSubscription?.unsubscribe();
     window.removeEventListener('resize', this.boundScaleContent);
     window.removeEventListener('orientationchange', this.boundScaleContent);
     window.visualViewport?.removeEventListener('resize', this.boundScaleContent);

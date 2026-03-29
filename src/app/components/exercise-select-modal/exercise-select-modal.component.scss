@@ -1,0 +1,98 @@
+:host {
+  --modal-bg: #1c1c1e;
+  --modal-border: #2f3033;
+  --modal-text: #f6f7f9;
+  --modal-muted: #a4a7ae;
+  --modal-item-bg: #242528;
+  --modal-item-selected: #31333a;
+}
+
+ion-header ion-toolbar,
+ion-footer ion-toolbar {
+  --background: var(--modal-bg);
+  --color: var(--modal-text);
+}
+
+ion-content {
+  --background: var(--modal-bg);
+  --color: var(--modal-text);
+}
+
+:host {
+  display: block;
+}
+
+ion-content {
+  min-height: 160px;
+}
+
+/* Ensure the component hosts a column layout so header/content/footer stack
+   and the footer remains visible while content can scroll. */
+:host {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+:host > ion-content {
+  flex: 1 1 auto;
+  overflow: auto;
+}
+
+:host > ion-footer {
+  flex: 0 0 auto;
+}
+
+ion-content::part(scroll) {
+  padding-bottom: 12px;
+}
+
+ion-content h2 {
+  margin: 0 0 14px;
+  font-size: 1.05rem;
+  font-weight: 650;
+  color: var(--modal-text);
+}
+
+.selection-group {
+  display: grid;
+  gap: 10px;
+  margin-bottom: 18px;
+}
+
+.selection-list {
+  background: transparent;
+  padding: 0;
+}
+
+.selection-group h3 {
+  margin: 2px 0 8px;
+  font-size: 0.95rem;
+  color: var(--modal-muted);
+  font-weight: 600;
+}
+
+ion-item {
+  --background: var(--modal-item-bg);
+  --color: var(--modal-text);
+  --border-color: var(--modal-border);
+  --inner-padding-end: 12px;
+  --inner-padding-start: 12px;
+  margin-bottom: 10px;
+  border: 1px solid var(--modal-border);
+  border-radius: 10px;
+}
+
+ion-item {
+  min-height: 56px;
+}
+
+/* Make radio labels clearly visible on dark background */
+ion-item ion-label {
+  color: var(--modal-text);
+}
+
+ion-item.selected {
+  --background: var(--modal-item-selected);
+  border-color: var(--ion-color-primary);
+}

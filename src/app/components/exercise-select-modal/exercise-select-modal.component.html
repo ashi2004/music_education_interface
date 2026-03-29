@@ -1,0 +1,49 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Select Exercise</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ion-text>
+    <h2>Step 1: Select Exercise Type</h2>
+  </ion-text>
+
+  <ion-list lines="none" class="selection-list">
+    <ion-item button detail="false" [class.selected]="selectedExercise === 'current'" (click)="selectExercise('current')">
+      <ion-label>Current Practice</ion-label>
+    </ion-item>
+
+    <ion-item button detail="false" [class.selected]="selectedExercise === 'relative'" (click)="selectExercise('relative')">
+      <ion-label>Relative Intonation</ion-label>
+    </ion-item>
+  </ion-list>
+
+  <div class="selection-group" *ngIf="selectedExercise === 'relative'">
+    <ion-text>
+      <h3>Step 2: Select Relative Intonation Mode</h3>
+    </ion-text>
+
+    <ion-list lines="none" class="selection-list">
+      <ion-item button detail="false" [class.selected]="selectedMode === 'unison'" (click)="selectMode('unison')">
+        <ion-label>Unison Mode</ion-label>
+      </ion-item>
+
+      <ion-item button detail="false" [class.selected]="selectedMode === 'chord'" (click)="selectMode('chord')">
+        <ion-label>Chord Completion Mode</ion-label>
+      </ion-item>
+    </ion-list>
+  </div>
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button fill="clear" color="medium" (click)="cancel()">Cancel</ion-button>
+    </ion-buttons>
+
+    <ion-buttons slot="end">
+      <ion-button (click)="confirmSelection()" [disabled]="!canContinue()">Continue</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-footer>
