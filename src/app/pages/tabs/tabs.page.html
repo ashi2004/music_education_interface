@@ -72,6 +72,40 @@
                     </ion-select>
                 </ion-item>
 
+                <ion-item-divider class="options-section-divider" sticky="false">
+                    <ion-label>Practice Settings</ion-label>
+                </ion-item-divider>
+
+                <div class="practice-skill-level" role="group" aria-label="Skill Level">
+                    <div class="practice-skill-level-label">Skill Level</div>
+                    <div class="difficulty-options-row">
+                        <button
+                            type="button"
+                            class="difficulty-option"
+                            [class.active]="selectedSkillLevel === 'beginner'"
+                            (click)="selectedSkillLevel = 'beginner'"
+                        >
+                            Beginner
+                        </button>
+                        <button
+                            type="button"
+                            class="difficulty-option"
+                            [class.active]="selectedSkillLevel === 'intermediate'"
+                            (click)="selectedSkillLevel = 'intermediate'"
+                        >
+                            Intermediate
+                        </button>
+                        <button
+                            type="button"
+                            class="difficulty-option"
+                            [class.active]="selectedSkillLevel === 'advanced'"
+                            (click)="selectedSkillLevel = 'advanced'"
+                        >
+                            Advanced
+                        </button>
+                    </div>
+                </div>
+
                 <ion-item>
                     <ion-toggle [checked]="useDynamics" (ionChange)="switchUseDynamics($event)" [disabled]="isDisabled()">
                         Dynamics

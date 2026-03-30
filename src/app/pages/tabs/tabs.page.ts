@@ -30,6 +30,7 @@ import { ExerciseSelectionService, ExerciseType, RelativeMode } from 'src/app/se
  */
 export class TabsComponent implements OnInit {
   selectedInstrument = 'trumpet';
+  selectedSkillLevel: 'beginner' | 'intermediate' | 'advanced' = 'beginner';
   mode = 'trumpet';
   useFlatsAndSharps = false;
   useDynamics = false;

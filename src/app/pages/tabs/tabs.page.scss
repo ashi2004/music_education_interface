@@ -1,4 +1,77 @@
 :host {
+	ion-menu ion-item-divider.options-section-divider {
+		--background: transparent;
+		--padding-start: 16px;
+		--inner-padding-end: 16px;
+		--min-height: 30px;
+		margin-top: 12px;
+		margin-bottom: 6px;
+		border: 0;
+	}
+
+	ion-menu ion-item-divider.options-section-divider ion-label {
+		font-size: 0.76rem;
+		font-weight: 700;
+		letter-spacing: 0.08em;
+		text-transform: uppercase;
+		color: #3f8eb4;
+		margin: 0;
+	}
+
+	/* Ensure the menu header title stays left-aligned like before */
+	ion-menu ion-header ion-toolbar ion-title {
+		text-align: start;
+		--padding-start: 12px;
+	}
+
+	ion-menu .practice-skill-level {
+		margin: 0 12px 8px;
+		padding: 10px 12px;
+		border: 1px solid rgba(0, 157, 218, 0.5);
+		border-radius: 8px;
+		background: rgba(0, 157, 218, 0.08);
+	}
+
+	ion-menu .practice-skill-level-label {
+		font-size: 0.82rem;
+		font-weight: 600;
+		line-height: 1.2;
+		margin-bottom: 8px;
+		color: rgba(255, 255, 255, 0.9);
+	}
+
+	ion-menu .practice-skill-level .difficulty-options-row {
+		display: flex;
+		flex-wrap: wrap; /* allow buttons to wrap to next line */
+		gap: 8px;
+		align-items: center;
+		justify-content: flex-start;
+	}
+
+	ion-menu .practice-skill-level .difficulty-option {
+		border: 1px solid rgba(0, 157, 218, 0.35);
+		border-radius: 6px;
+		background: rgba(255, 255, 255, 0.02);
+		color: inherit;
+		font: inherit;
+		font-size: 0.92rem;
+		font-weight: 500;
+		padding: 0.38rem 0.6rem;
+		min-width: 86px; /* keep buttons readable */
+		max-width: none;
+		cursor: pointer;
+		white-space: normal; /* allow wrapping */
+		flex: 0 1 auto; /* allow shrinking if needed and wrap */
+		text-align: center;
+	}
+
+	ion-menu .practice-skill-level .difficulty-option.active {
+		background: var(--ion-color-primary);
+		border-color: var(--ion-color-primary);
+		color: #ffffff;
+		font-weight: 600;
+	}
+
 	ion-tab-bar.custom-tab-bar {
 		--background: #ffffff;
 		--color: #2b2b2b;
@@ -28,7 +101,28 @@
 	}
 }
 
+@media screen and (max-width: 480px) {
+	ion-menu .practice-skill-level .difficulty-option {
+		padding: 0.36rem 0.4rem;
+		font-size: 0.82rem;
+		min-width: 0;
+	}
+
+	ion-menu .practice-skill-level .difficulty-options-row {
+		gap: 6px;
+		justify-content: space-between;
+	}
+
+	ion-menu .practice-skill-level .difficulty-option {
+		flex-basis: calc(50% - 6px);
+	}
+}
+
 :host-context(body.dark-theme) {
+	ion-menu ion-item-divider.options-section-divider ion-label {
+		color: #a8a8a8;
+	}
+
 	ion-tab-bar.custom-tab-bar {
 		--background: #111111;
 		--color: #cfcfcf;
