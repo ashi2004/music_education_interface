@@ -28,14 +28,22 @@ import { RenderContext, Renderer } from 'vexflow';
   template: `
     <div *ngIf="showExerciseMeta" class="exercise-center">
       <p class="mode-label">{{ selectedMode === 'chord' ? 'CHORD' : 'UNISON' }}</p>
-      <p class="instruction">{{ selectedMode === 'chord' ? 'Find the missing note' : 'Match the pitch' }}</p>
-      <div *ngIf="!showChordGuide && displayNoteName" class="note-main">
+      <p *ngIf="(selectedMode === 'chord' && selectedDifficulty !== 'advanced') || (selectedMode === 'unison' && selectedDifficulty === 'beginner')" class="instruction">
+        {{ selectedMode === 'chord' ? 'Find the missing note' : 'Match the pitch' }}
+      </p>
+      <p *ngIf="selectedMode === 'unison' && selectedDifficulty === 'intermediate'" class="helper">
+        (keep steady)
+      </p>
+      <div *ngIf="!showChordGuide && displayNoteName && selectedMode === 'unison' && (selectedDifficulty === 'beginner' || selectedDifficulty === 'intermediate' || selectedDifficulty === 'advanced')" class="note-main">
         <strong>{{ displayNoteName }}</strong>
       </div>
       <div *ngIf="showChordGuide" class="chord-main">
         <strong>C</strong>
-        <strong class="missing-note">?</strong>
+        <strong [class.missing-note]="selectedDifficulty === 'beginner'">_</strong>
         <strong>G</strong>
+      </div>
+      <div *ngIf="selectedMode === 'chord' && selectedDifficulty === 'beginner'" class="correct-card">
+        Correct - E
       </div>
     </div>
     <div id="score" class="score-surface"></div>
@@ -80,6 +88,14 @@ import { RenderContext, Renderer } from 'vexflow';
       font-weight: 600;
     }
 
+    .helper {
+      margin: 0.08rem 0 0;
+      font-size: 0.9rem;
+      opacity: 0.72;
+      font-style: italic;
+      font-weight: 600;
+    }
+
     .note-main {
       margin: 0.35rem 0 0;
       font-size: clamp(2.4rem, 7vw, 3rem);
@@ -99,6 +115,19 @@ import { RenderContext, Renderer } from 'vexflow';
     .missing-note {
       color: var(--ion-color-primary, #1769ff);
       font-weight: 700;
+    }
+    
+    .correct-card {
+      margin: 0.2rem auto 0;
+      width: fit-content;
+      min-width: 7.5rem;
+      padding: 0.28rem 0.75rem;
+      border-radius: 0.5rem;
+      background: #1f9d44;
+      color: #ffffff;
+      font-size: 0.92rem;
+      font-weight: 700;
+      line-height: 1.2;
     }
   `],
   standalone: true,
@@ -124,8 +153,10 @@ export class ScoreViewComponent implements AfterViewInit {
   @Input() instrument: string = 'clarinet';
   @Input() language: string = 'en';
   @Input() selectedMode: 'unison' | 'chord' | null = null;
+  @Input() selectedDifficulty: 'beginner' | 'intermediate' | 'advanced' = 'beginner';
   @Input() showExerciseMeta = false;
   @Input() showChordGuide = false;
+  @Input() correctAnswer: string | null = null;
   private _renderer!: Renderer;
   private _context!: RenderContext;
   displayNoteName = '';
