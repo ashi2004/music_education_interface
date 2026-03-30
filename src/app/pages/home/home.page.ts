@@ -64,6 +64,7 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
   language: string = 'en'; // Default language
   selectedExercise: 'current' | 'relative' = 'current';
   selectedMode: 'unison' | 'chord' | null = null;
+  selectedDifficulty: 'beginner' | 'intermediate' | 'advanced' = 'beginner';
   /**
    * Array of notes corresponding to the selected instrument.
    */

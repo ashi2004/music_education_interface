@@ -92,6 +92,38 @@
 
           </div>
 
+          <div class="difficulty-card-wrapper">
+            <div class="difficulty-card">
+              <div class="difficulty-card-title">Difficulty Level</div>
+              <div class="difficulty-options-row" role="group" aria-label="Difficulty Level">
+                <button
+                  type="button"
+                  class="difficulty-option"
+                  [class.active]="selectedDifficulty === 'beginner'"
+                  (click)="selectedDifficulty = 'beginner'"
+                >
+                  Beginner
+                </button>
+                <button
+                  type="button"
+                  class="difficulty-option"
+                  [class.active]="selectedDifficulty === 'intermediate'"
+                  (click)="selectedDifficulty = 'intermediate'"
+                >
+                  Intermediate
+                </button>
+                <button
+                  type="button"
+                  class="difficulty-option"
+                  [class.active]="selectedDifficulty === 'advanced'"
+                  (click)="selectedDifficulty = 'advanced'"
+                >
+                  Advanced
+                </button>
+              </div>
+            </div>
+          </div>
+
           <div class="sounds-loading-hint" *ngIf="soundsLoading$ | async">
             <ion-spinner name="crescent"></ion-spinner>
             <span>Loading sounds, please wait before starting the exercise.</span>
