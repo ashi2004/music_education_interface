@@ -261,6 +261,7 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
     this.exerciseSelectionSubscription = this.exerciseSelectionService.selection$.subscribe(selection => {
       this.selectedExercise = selection.selectedExercise;
       this.selectedMode = selection.selectedMode;
+      this.updateRelativeListenBehavior();
     });
     this.refFrequencyService.getRefFrequency().subscribe(value => {
       this.refFrequencyValue$ = value;
@@ -268,6 +269,7 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
     this.showIOSWebAudioHint = this.isIOSWebBrowser()
       && sessionStorage.getItem('ios-web-audio-hint-dismissed') !== 'true';
     this.loadStateFromLocalStorage();
+    this.updateRelativeListenBehavior();
   }
 
   ngOnDestroy(): void {
@@ -318,7 +320,31 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
   private handleSettingsUpdated() {
     this.loadStateFromLocalStorage();
     this.noteImages = this.getNoteImages();
+    this.updateRelativeListenBehavior();
     this.queueScaleContent();
+  }
+
+  private updateRelativeListenBehavior() {
+    const isChordMode = this.selectedExercise === 'relative' && this.selectedMode === 'chord';
+    this.soundsService.setExerciseListenMode(isChordMode ? 'chord' : 'unison');
+
+    if (!isChordMode) {
+      this.soundsService.setChordReferenceNotes([]);
+      return;
+    }
+
+    const cIndex = this.findFirstNoteIndexByLetter('C');
+    const gIndex = this.findFirstNoteIndexByLetter('G');
+    const chordReferences = [cIndex, gIndex].filter((index) => index >= 0);
+    this.soundsService.setChordReferenceNotes(chordReferences);
+  }
+
+  private findFirstNoteIndexByLetter(letter: 'C' | 'G'): number {
+    const target = letter.toLowerCase();
+
+    return this.NOTES.findIndex((variantGroup) =>
+      variantGroup.some((variant) => variant.toLowerCase().startsWith(target))
+    );
   }
   
   /**

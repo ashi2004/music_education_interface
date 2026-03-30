@@ -26,10 +26,19 @@ import { RenderContext, Renderer } from 'vexflow';
 @Component({
   selector: 'score-view',
   template: `
-    <div id="score" class="score-surface"></div>
-    <div *ngIf="displayNoteName" class="score-note-name">
-      <strong>{{ displayNoteName }}</strong>
+    <div *ngIf="showExerciseMeta" class="exercise-center">
+      <p class="mode-label">{{ selectedMode === 'chord' ? 'CHORD' : 'UNISON' }}</p>
+      <p class="instruction">{{ selectedMode === 'chord' ? 'Find the missing note' : 'Match the pitch' }}</p>
+      <div *ngIf="!showChordGuide && displayNoteName" class="note-main">
+        <strong>{{ displayNoteName }}</strong>
+      </div>
+      <div *ngIf="showChordGuide" class="chord-main">
+        <strong>C</strong>
+        <strong class="missing-note">?</strong>
+        <strong>G</strong>
+      </div>
     </div>
+    <div id="score" class="score-surface"></div>
   `,
   styles: [`
     :host {
@@ -48,16 +57,48 @@ import { RenderContext, Renderer } from 'vexflow';
       background-color: white;
     }
 
-    .score-note-name {
-      flex: 0 0 auto;
-      min-height: 2.35rem;
-      margin-top: 0.25rem;
-      padding: 0 0 0.45rem;
+    .exercise-center {
+      width: 100%;
       text-align: center;
-      color: #111111;
-      font-size: clamp(1.3rem, 2.6vw, 1.8rem);
-      line-height: 1.1;
+      /* reduced spacing to tighten vertical rhythm */
+      padding: 0.1rem 0 0.15rem;
+    }
+
+    .mode-label {
+      margin: 0;
+      font-size: 0.65rem;
+      opacity: 0.55;
+      line-height: 1.2;
+      letter-spacing: 0.03em;
+    }
+
+    .instruction {
+      margin: 0.12rem 0 0;
+      font-size: 1rem;
+      opacity: 0.78;
+      line-height: 1.2;
+      font-weight: 600;
+    }
+
+    .note-main {
+      margin: 0.35rem 0 0;
+      font-size: clamp(2.4rem, 7vw, 3rem);
+      line-height: 1.02;
       letter-spacing: 0.02em;
+    }
+
+    .chord-main {
+      margin: 0.28rem 0 0;
+      display: flex;
+      justify-content: center;
+      gap: clamp(0.9rem, 3.2vw, 1.5rem);
+      font-size: clamp(1.9rem, 5.2vw, 2.4rem);
+      line-height: 1;
+    }
+
+    .missing-note {
+      color: var(--ion-color-primary, #1769ff);
+      font-weight: 700;
     }
   `],
   standalone: true,
@@ -82,6 +123,9 @@ export class ScoreViewComponent implements AfterViewInit {
   }
   @Input() instrument: string = 'clarinet';
   @Input() language: string = 'en';
+  @Input() selectedMode: 'unison' | 'chord' | null = null;
+  @Input() showExerciseMeta = false;
+  @Input() showChordGuide = false;
   private _renderer!: Renderer;
   private _context!: RenderContext;
   displayNoteName = '';

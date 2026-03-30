@@ -54,6 +54,8 @@ export class SoundsService {
     private loadingSubject = new BehaviorSubject<boolean>(true);
     currentNote: number = 0; // Index of the current note
     volume: number = 1.0; // Volume level for sound playback
+    exerciseListenMode: 'unison' | 'chord' = 'unison';
+    chordReferenceNotes: number[] = [];
     loading$ = this.loadingSubject.asObservable();
 
     /**
@@ -259,6 +261,16 @@ private async resolveAudioPath(instrument: string, noteVariants: string[]): Prom
             playAndFade(audio, 4 * 60000 / this._beat.tempo$.value, this.volume); // Play and fade the note sound
         }
     }
+
+    playChordReferenceSounds(noteIndexes: number[]) {
+        const duration = 4 * 60000 / this._beat.tempo$.value;
+        noteIndexes.forEach(index => {
+            const audio = this.preloadedNotes[index];
+            if (audio) {
+                playAndFade(audio, duration, this.volume);
+            }
+        });
+    }
     // playTrumpetSound(currentNote: number) {
     //     const audio = this.preloadedNotes[currentNote];
     //     playAndFade(audio, 4 * 60000 / this._beat.tempo$.value, this.volume);
@@ -287,9 +299,21 @@ private async resolveAudioPath(instrument: string, noteVariants: string[]): Prom
 
         if (tempo.beat == 0) {
             if (tempo.measure == 1) {
-                this.playNoteSound(this.currentNote); // Play the note sound on the first beat of the measure
+                if (this.exerciseListenMode === 'chord' && this.chordReferenceNotes.length > 0) {
+                    this.playChordReferenceSounds(this.chordReferenceNotes);
+                } else {
+                    this.playNoteSound(this.currentNote); // Play the note sound on the first beat of the measure
+                }
             }
         }
+    }
+
+    setExerciseListenMode(mode: 'unison' | 'chord') {
+        this.exerciseListenMode = mode;
+    }
+
+    setChordReferenceNotes(noteIndexes: number[]) {
+        this.chordReferenceNotes = noteIndexes;
     }
 
     /**
