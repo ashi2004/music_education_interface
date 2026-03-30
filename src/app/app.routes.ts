@@ -51,6 +51,10 @@ export const routes: Routes = [
         loadComponent: () => import('./pages/pitchlite/pitchlite.page').then(m => m.PitchComponent), // Loads the PitchComponent for the tuner route
       },
       {
+        path: 'dashboard',
+        loadComponent: () => import('./pages/dashboard/dashboard.page').then(m => m.DashboardPage),
+      },
+      {
         path: '',
         redirectTo: 'exercise', // Redirects to the exercise route by default
         pathMatch: 'full',

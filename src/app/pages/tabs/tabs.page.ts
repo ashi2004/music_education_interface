@@ -248,6 +248,20 @@ export class TabsComponent implements OnInit {
   }
 
   /**
+   * Navigate to the dashboard route and select the dashboard tab.
+   */
+  async goToDashboard() {
+    if (this.isDisabled()) return;
+    try {
+      await this.router.navigate(['/home/dashboard']);
+      // ensure ion-tabs visual selection matches
+      this.tabs?.select('dashboard');
+    } catch (e) {
+      console.error('Failed to navigate to dashboard', e);
+    }
+  }
+
+  /**
    * Navigates to the user profile page.
    * @returns void
    */
