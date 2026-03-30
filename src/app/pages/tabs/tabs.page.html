@@ -117,6 +117,16 @@
                 Exercise
             </ion-tab-button>
             <ion-tab-button
+                tab="dashboard"
+                [disabled]="isDisabled()"
+            >
+                <ion-icon
+                    name="stats-chart"
+                    style="margin-bottom: 2px;"
+                ></ion-icon>
+                Dashboard
+            </ion-tab-button>
+            <ion-tab-button
                 tab="tuner"
                 [disabled]="isDisabled()"
                 (click)="prepareTunerMedia()"
