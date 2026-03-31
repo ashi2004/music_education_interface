@@ -32,6 +32,7 @@ export class TabsComponent implements OnInit {
   selectedInstrument = 'trumpet';
   selectedSkillLevel: 'beginner' | 'intermediate' | 'advanced' = 'beginner';
   mode = 'trumpet';
+  selectedDailyGoal: 3 | 5 | 10 = 5;
   useFlatsAndSharps = false;
   useDynamics = false;
   isDarkMode = false;

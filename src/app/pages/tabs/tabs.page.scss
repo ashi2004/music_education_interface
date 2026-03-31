@@ -24,31 +24,43 @@
 		--padding-start: 12px;
 	}
 
-	ion-menu .practice-skill-level {
-		margin: 0 12px 8px;
-		padding: 10px 12px;
+	ion-menu .practice-skill-level,
+	ion-menu .practice-daily-goal {
+		margin: 0 12px;
+		padding: 12px 14px;
 		border: 1px solid rgba(0, 157, 218, 0.5);
 		border-radius: 8px;
 		background: rgba(0, 157, 218, 0.08);
 	}
 
-	ion-menu .practice-skill-level-label {
+	ion-menu .practice-skill-level {
+		margin-bottom: 12px;
+	}
+
+	ion-menu .practice-daily-goal {
+		margin-bottom: 10px;
+	}
+
+	ion-menu .practice-skill-level-label,
+	ion-menu .practice-daily-goal-label {
 		font-size: 0.82rem;
 		font-weight: 600;
 		line-height: 1.2;
-		margin-bottom: 8px;
-		color: rgba(255, 255, 255, 0.9);
+		margin-bottom: 10px;
+		color: rgba(255, 255, 255, 0.74);
 	}
 
-	ion-menu .practice-skill-level .difficulty-options-row {
+	ion-menu .practice-skill-level .difficulty-options-row,
+	ion-menu .practice-daily-goal .difficulty-options-row {
 		display: flex;
 		flex-wrap: wrap; /* allow buttons to wrap to next line */
-		gap: 8px;
+		gap: 10px;
 		align-items: center;
-		justify-content: flex-start;
+		justify-content: center;
 	}
 
-	ion-menu .practice-skill-level .difficulty-option {
+	ion-menu .practice-skill-level .difficulty-option,
+	ion-menu .practice-daily-goal .difficulty-option {
 		border: 1px solid rgba(0, 157, 218, 0.35);
 		border-radius: 6px;
 		background: rgba(255, 255, 255, 0.02);
@@ -56,8 +68,9 @@
 		font: inherit;
 		font-size: 0.92rem;
 		font-weight: 500;
-		padding: 0.38rem 0.6rem;
+		padding: 0.42rem 0.8rem;
 		min-width: 86px; /* keep buttons readable */
+		min-height: 36px;
 		max-width: none;
 		cursor: pointer;
 		white-space: normal; /* allow wrapping */
@@ -65,7 +78,20 @@
 		text-align: center;
 	}
 
-	ion-menu .practice-skill-level .difficulty-option.active {
+	/* Keep Skill Level as 2 buttons first row, 1 button second row. */
+	ion-menu .practice-skill-level .difficulty-option {
+		flex: 1 1 calc(50% - 10px);
+		max-width: 155px;
+		min-width: 118px;
+	}
+
+	/* Daily Goal prefers one row; wraps and stays centered on narrow widths. */
+	ion-menu .practice-daily-goal .difficulty-option {
+		flex: 0 0 84px;
+	}
+
+	ion-menu .practice-skill-level .difficulty-option.active,
+	ion-menu .practice-daily-goal .difficulty-option.active {
 		background: var(--ion-color-primary);
 		border-color: var(--ion-color-primary);
 		color: #ffffff;
@@ -102,19 +128,27 @@
 }
 
 @media screen and (max-width: 480px) {
-	ion-menu .practice-skill-level .difficulty-option {
-		padding: 0.36rem 0.4rem;
+	ion-menu .practice-skill-level .difficulty-option,
+	ion-menu .practice-daily-goal .difficulty-option {
+		padding: 0.36rem 0.5rem;
 		font-size: 0.82rem;
-		min-width: 0;
+		min-height: 34px;
 	}
 
-	ion-menu .practice-skill-level .difficulty-options-row {
-		gap: 6px;
-		justify-content: space-between;
+	ion-menu .practice-skill-level .difficulty-options-row,
+	ion-menu .practice-daily-goal .difficulty-options-row {
+		gap: 8px;
+		justify-content: center;
 	}
 
 	ion-menu .practice-skill-level .difficulty-option {
-		flex-basis: calc(50% - 6px);
+		flex: 1 1 calc(50% - 8px);
+		min-width: 106px;
+		max-width: 150px;
+	}
+
+	ion-menu .practice-daily-goal .difficulty-option {
+		flex: 0 0 78px;
 	}
 }
 

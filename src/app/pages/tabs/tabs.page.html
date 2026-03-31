@@ -106,6 +106,36 @@
                     </div>
                 </div>
 
+                <div class="practice-daily-goal" role="group" aria-label="Daily Goal">
+                    <div class="practice-daily-goal-label">Daily Goal (sessions per day)</div>
+                    <div class="difficulty-options-row">
+                        <button
+                            type="button"
+                            class="difficulty-option"
+                            [class.active]="selectedDailyGoal === 3"
+                            (click)="selectedDailyGoal = 3"
+                        >
+                            3
+                        </button>
+                        <button
+                            type="button"
+                            class="difficulty-option"
+                            [class.active]="selectedDailyGoal === 5"
+                            (click)="selectedDailyGoal = 5"
+                        >
+                            5
+                        </button>
+                        <button
+                            type="button"
+                            class="difficulty-option"
+                            [class.active]="selectedDailyGoal === 10"
+                            (click)="selectedDailyGoal = 10"
+                        >
+                            10
+                        </button>
+                    </div>
+                </div>
+
                 <ion-item>
                     <ion-toggle [checked]="useDynamics" (ionChange)="switchUseDynamics($event)" [disabled]="isDisabled()">
                         Dynamics
