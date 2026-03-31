@@ -6,7 +6,7 @@
   See the LICENSE file for more details.
 -->
 
-<div class="ion-page" id="main-content">
+<div class="ion-page" id="main-content" [class.guided-tour-active]="showGuidedTourModal">
   <ion-content [fullscreen]="true">
     <div id="container">
       <div class="wrapper" id="wrapper" [class.is-playing]="isPlaying()" [class.is-idle]="!isPlaying()">
@@ -139,24 +139,22 @@
 
     </div>
 
-    <div class="guided-tour-overlay" aria-hidden="true" *ngIf="showGuidedTourModal">
-      <div class="guided-tour-modal" role="dialog" aria-modal="true" aria-labelledby="guided-tour-title" aria-describedby="guided-tour-subtitle">
-        <h2 id="guided-tour-title">Welcome to HarmonyHub</h2>
-        <p id="guided-tour-subtitle">
-          Improve your pitch accuracy with guided exercises and track your progress over time
-        </p>
-        <div class="guided-tour-actions">
-          <button type="button" class="guided-tour-btn primary">Start Tour</button>
-          <button type="button" class="guided-tour-btn secondary">Skip</button>
-        </div>
-      </div>
-    </div>
   </ion-content>
 
-  <ion-footer>
-    <ion-button (click)="startStop()" expand="block" [disabled]="(soundsLoading$ | async) && !isPlaying()">
+  <ion-footer class="start-tour-footer-target">
+    <ion-button class="start-tour-target" (click)="startStop()" expand="block" [disabled]="(soundsLoading$ | async) && !isPlaying()">
       {{isPlaying() ? 'Stop': ((soundsLoading$ | async) ? 'Loading sounds...' : 'Start')}}
     </ion-button>
   </ion-footer>
+
+  <div class="start-tour-overlay" aria-hidden="true" *ngIf="showGuidedTourModal">
+    <div class="start-tour-tooltip" role="dialog" aria-modal="true" aria-label="Start exercise tour step">
+      <p>Click Start to begin practice (Listen → Play → Rest)</p>
+      <div class="start-tour-actions">
+        <button type="button" class="start-tour-btn">Next</button>
+        <button type="button" class="start-tour-btn secondary">Skip</button>
+      </div>
+    </div>
+  </div>
 
 </div>
