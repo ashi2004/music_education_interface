@@ -152,7 +152,7 @@
     </ion-content>
 </ion-menu>
 
-<div class="ion-page" id="tabs-shell">
+<div class="ion-page" id="tabs-shell" [class.dashboard-tour-active]="showDashboardTourOverlay">
     <ion-tabs
         #tabs
         (ionTabsDidChange)="onChange($event)"
@@ -182,6 +182,7 @@
             </ion-tab-button>
             <ion-tab-button
                 tab="dashboard"
+                class="tour-dashboard-target"
                 [disabled]="isDisabled()"
                 (click)="goToDashboard()"
             >
@@ -204,4 +205,20 @@
             </ion-tab-button>
         </ion-tab-bar>
     </ion-tabs>
+
+    <div class="dashboard-tour-overlay" aria-hidden="true" *ngIf="showDashboardTourOverlay">
+        <div
+            class="dashboard-tour-tooltip"
+            role="dialog"
+            aria-modal="true"
+            aria-label="Dashboard guided tour step"
+        >
+            <p>Track your progress and improve over time</p>
+            <div class="dashboard-tour-actions">
+                <button type="button" class="dashboard-tour-btn">Next</button>
+                <button type="button" class="dashboard-tour-btn secondary">Back</button>
+                <button type="button" class="dashboard-tour-btn skip">Skip</button>
+            </div>
+        </div>
+    </div>
 </div>

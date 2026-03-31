@@ -192,7 +192,7 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
   refFrequencyValue$!: number;
 
   showIOSWebAudioHint = false;
-  showGuidedTourModal = true;
+  showGuidedTourModal = false;
 
   /**
    * An object to collect all the notes played.

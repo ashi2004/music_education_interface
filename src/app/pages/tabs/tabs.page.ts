@@ -37,6 +37,7 @@ export class TabsComponent implements OnInit {
   useDynamics = false;
   isDarkMode = false;
   language = 'en';
+  showDashboardTourOverlay = true;
   refFrequencyValue$ = 440;
   instrumentSelectInterfaceOptions = { cssClass: 'settings-select-overlay' };
   nomenclatureSelectInterfaceOptions = { cssClass: 'settings-select-overlay' };

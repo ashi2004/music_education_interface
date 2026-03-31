@@ -125,6 +125,110 @@
 	ion-tab-bar.custom-tab-bar ion-tab-button ion-icon {
 		margin-bottom: 2px; /* keep icon/label gap consistent */
 	}
+
+	.dashboard-tour-overlay {
+		position: fixed;
+		inset: 0;
+		z-index: 70;
+		pointer-events: none;
+		background: rgba(7, 10, 18, 0.72);
+	}
+
+	.dashboard-tour-active .tour-dashboard-target {
+		position: relative;
+		overflow: visible;
+		z-index: 72;
+		transform: scale(1.05);
+	}
+
+	.dashboard-tour-active .tour-dashboard-target::before {
+		content: '';
+		position: absolute;
+		inset: 5px 8px;
+		border: 1px solid rgba(99, 176, 255, 0.9);
+		border-radius: 12px;
+		box-shadow:
+			0 0 0 2px rgba(23, 105, 255, 0.16),
+			0 0 9px rgba(23, 105, 255, 0.24);
+		pointer-events: none;
+	}
+
+	.dashboard-tour-tooltip {
+		--dashboard-anchor-x: 62.5%;
+		--dashboard-tooltip-width: min(82vw, 300px);
+		position: fixed;
+		left: clamp(
+			calc((var(--dashboard-tooltip-width) / 2) + 12px),
+			var(--dashboard-anchor-x),
+			calc(100% - (var(--dashboard-tooltip-width) / 2) - 12px)
+		);
+		bottom: calc(64px + env(safe-area-inset-bottom, 0px));
+		transform: translateX(-50%);
+		width: var(--dashboard-tooltip-width);
+		max-width: calc(100vw - 20px);
+		border-radius: 14px;
+		padding: 0.8rem 0.85rem;
+		background: #121a2a;
+		color: #ffffff;
+		box-shadow: 0 10px 26px rgba(0, 0, 0, 0.4);
+		pointer-events: auto;
+		text-transform: none;
+		font-weight: 500;
+		z-index: 71;
+	}
+
+	.dashboard-tour-tooltip::after {
+		content: '';
+		position: absolute;
+		left: 50%;
+		bottom: -6px;
+		width: 14px;
+		height: 14px;
+		background: #121a2a;
+		transform: translateX(-50%) rotate(45deg);
+	}
+
+	.dashboard-tour-tooltip p {
+		margin: 0;
+		line-height: 1.35;
+		font-size: 0.95rem;
+		text-align: center;
+		white-space: normal;
+		overflow-wrap: anywhere;
+	}
+
+	.dashboard-tour-actions {
+		margin-top: 0.7rem;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		gap: 0.5rem;
+	}
+
+	.dashboard-tour-btn {
+		border: 1px solid var(--ion-color-primary, #1769ff);
+		background: var(--ion-color-primary, #1769ff);
+		color: #ffffff;
+		border-radius: 9px;
+		padding: 0.4rem 0.75rem;
+		font: inherit;
+		font-size: 0.88rem;
+		font-weight: 600;
+		text-transform: none;
+		min-height: 34px;
+	}
+
+	.dashboard-tour-btn.secondary {
+		background: transparent;
+		border-color: rgba(99, 176, 255, 0.65);
+		color: rgba(255, 255, 255, 0.92);
+	}
+
+	.dashboard-tour-btn.skip {
+		background: rgba(23, 105, 255, 0.12);
+		border-color: rgba(99, 176, 255, 0.32);
+		color: rgba(255, 255, 255, 0.88);
+	}
 }
 
 @media screen and (max-width: 480px) {
@@ -149,6 +253,22 @@
 
 	ion-menu .practice-daily-goal .difficulty-option {
 		flex: 0 0 78px;
+	}
+
+	.dashboard-tour-tooltip {
+		--dashboard-tooltip-width: min(90vw, 280px);
+		--dashboard-anchor-x: 62.5%;
+		left: clamp(
+			calc((var(--dashboard-tooltip-width) / 2) + 12px),
+			var(--dashboard-anchor-x),
+			calc(100% - (var(--dashboard-tooltip-width) / 2) - 12px)
+		);
+		bottom: calc(66px + env(safe-area-inset-bottom, 0px));
+		width: var(--dashboard-tooltip-width);
+	}
+
+	.dashboard-tour-actions {
+		flex-wrap: wrap;
 	}
 }
 
