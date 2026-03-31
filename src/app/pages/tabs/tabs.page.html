@@ -136,6 +136,16 @@
                     </div>
                 </div>
 
+                <ion-item-divider class="options-section-divider" sticky="false">
+                    <ion-label>Help &amp; Guidance</ion-label>
+                </ion-item-divider>
+
+                <div class="help-guidance-card" role="group" aria-label="Help and Guidance">
+                    <button type="button" class="help-guidance-item">Guided Tour</button>
+                    <button type="button" class="help-guidance-item">Practice Help</button>
+                    <button type="button" class="help-guidance-item">Tuner Help</button>
+                </div>
+
                 <ion-item>
                     <ion-toggle [checked]="useDynamics" (ionChange)="switchUseDynamics($event)" [disabled]="isDisabled()">
                         Dynamics
